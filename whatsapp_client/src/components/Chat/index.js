@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.scss";
 import { Avatar, IconButton } from "@material-ui/core";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
@@ -6,8 +6,28 @@ import AttachFileIcon from "@material-ui/icons/AttachFile";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
+import axios from "../../axios";
 
-const Chat = () => {
+const Chat = ({ messages }) => {
+  const [text, setText] = useState("");
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setText(e.target.value);
+  };
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    await axios.post("/messages/new", {
+      message: text,
+      name: "Ammar",
+      timestamp: "Just now!",
+      received: false,
+    });
+
+    setText("");
+  };
+
   return (
     <div className="chat">
       <div className="chat__header">
@@ -31,28 +51,27 @@ const Chat = () => {
       </div>
 
       <div className="chat__body">
-        <p className="send">
-          <span className="name">Ammar </span>
-          This is a message
-          <span className="timestamp">{new Date().toUTCString()}</span>
-        </p>
-        <p className="receive">
-          <span className="name">Ammar </span>
-          This is a message
-          <span className="timestamp">{new Date().toUTCString()}</span>
-        </p>
-        <p className="send">
-          <span className="name">Ammar </span>
-          This is a message
-          <span className="timestamp">{new Date().toUTCString()}</span>
-        </p>
+        {messages.map(({ name, message, timestamp, received }) => (
+          <p className={received ? "send" : "receive"}>
+            <span className="name">{name} </span>
+            {message}
+            <span className="timestamp">{new Date().toUTCString()}</span>
+          </p>
+        ))}
       </div>
 
       <div className="chat__footer">
         <InsertEmoticonIcon />
         <form>
-          <input placeholder="Type a message" type="text" />
-          <button type="submit">Send</button>
+          <input
+            value={text}
+            onChange={handleChange}
+            placeholder="Type a message"
+            type="text"
+          />
+          <button onClick={sendMessage} type="submit">
+            Send
+          </button>
         </form>
         <MicIcon />
       </div>
