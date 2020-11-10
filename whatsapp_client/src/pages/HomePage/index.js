@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import firebase from "firebase";
 import "./index.scss";
 import Chat from "../../components/Chat";
 import Sidebar from "../../components/Sidebar";
@@ -20,7 +21,20 @@ import axios from "../../axios";
 
 */
 
-function Homepage() {
+function Homepage({ history }) {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function (person) {
+      if (person) {
+        setUser(person);
+      } else {
+        history.push("/login");
+      }
+    });
+
+    console.log(user);
+  });
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
