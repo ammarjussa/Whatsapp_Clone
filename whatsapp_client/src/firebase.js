@@ -1,3 +1,5 @@
+import firebase from "firebase";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAMjgbUT492_qkjlRfVtC0tI7AcyABjfeA",
   authDomain: "whatsapp-clone-caa6a.firebaseapp.com",
