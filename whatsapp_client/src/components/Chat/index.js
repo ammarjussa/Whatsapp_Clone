@@ -8,7 +8,7 @@ import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import axios from "../../axios";
 
-const Chat = ({ messages }) => {
+const Chat = ({ messages, user }) => {
   const [text, setText] = useState("");
 
   const handleChange = (e) => {

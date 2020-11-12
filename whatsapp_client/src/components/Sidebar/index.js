@@ -1,17 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.scss";
-import { Avatar, IconButton } from "@material-ui/core";
+import { Avatar, IconButton, Menu, MenuItem } from "@material-ui/core";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import SidebarChat from "./SidebarChat";
+import firebase from "firebase";
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    console.log(anchorEl);
+  };
+
+  const signOut = (e) => {
+    e.preventDefault();
+    firebase
+      .auth()
+      .signOut()
+      .then(
+        function () {
+          console.log("Signed Out");
+        },
+        function (error) {
+          console.error("Sign Out Error", error);
+        }
+      );
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar src="https://scontent.fkhi4-1.fna.fbcdn.net/v/t1.0-1/p160x160/119741127_104766208049447_1835121773555063927_n.jpg?_nc_cat=103&ccb=2&_nc_sid=dbb9e7&_nc_eui2=AeGNDRiAVdxZ6yZ64m0SMEUarFAgzL5B8-esUCDMvkHz54bVZAZdzXaCbw14Qd6l1oaCrGFTcno1a8iHqraUtUQr&_nc_ohc=rXpjqhv0MLEAX_-d6zK&_nc_ht=scontent.fkhi4-1.fna&tp=6&oh=3ed6603a77ed5511e040b37be992bfe0&oe=5FC8E1D3" />
+        <Avatar src={user.photoURL} />
         <div className="sidebar__headerRight">
           <IconButton>
             <DonutLargeIcon />
@@ -19,8 +46,22 @@ const Sidebar = () => {
           <IconButton>
             <ChatIcon />
           </IconButton>
-          <IconButton>
+          <IconButton
+            onClick={handleClick}
+            aria-label="more"
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+          >
             <MoreVertIcon />
+            <Menu
+              id="simple-menu"
+              keepMounted
+              open={Boolean(anchorEl)}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={signOut}>Logout</MenuItem>
+            </Menu>
           </IconButton>
         </div>
       </div>

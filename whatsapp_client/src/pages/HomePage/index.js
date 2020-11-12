@@ -27,6 +27,7 @@ function Homepage({ history }) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (person) {
       if (person) {
+        console.log(person);
         setUser(person);
       } else {
         history.push("/login");
@@ -62,8 +63,8 @@ function Homepage({ history }) {
   return (
     <div className="home">
       <div className="home__body">
-        <Sidebar />
-        <Chat messages={messages} />
+        <Sidebar user={user} />
+        <Chat messages={messages} user={user} />
       </div>
     </div>
   );
