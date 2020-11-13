@@ -10,10 +10,17 @@ import firebaseConfig from "./firebase";
 
 2) One on one messaging. (Complicated)
 3) Group messaging. (Easier)
+
+Group -> {
+  groupid, 
+  groupname,
+  members -> [users],
+  messages -> [message]
+}
+
 5) Audio message
 6) Attachments sending along with message
 7) All Members shown when chat icon clicked(UI + Functionality)
-8) Logout option 
 9) Deploy on Heroku
 
 */
