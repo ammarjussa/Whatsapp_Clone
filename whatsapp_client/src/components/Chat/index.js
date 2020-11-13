@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./index.scss";
 import { Avatar, IconButton } from "@material-ui/core";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
@@ -20,13 +20,25 @@ const Chat = ({ messages, user }) => {
     e.preventDefault();
     await axios.post("/messages/new", {
       message: text,
-      name: "Ammar",
+      name: user.displayName,
       timestamp: "Just now!",
-      received: false,
     });
 
     setText("");
   };
+
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef && scrollRef.current) {
+      const element = scrollRef.current;
+      element.scroll({
+        top: element.scrollHeight,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [scrollRef, messages]);
 
   return (
     <div className="chat">
@@ -50,9 +62,9 @@ const Chat = ({ messages, user }) => {
         </div>
       </div>
 
-      <div className="chat__body">
+      <div className="chat__body" ref={scrollRef}>
         {messages.map(({ name, message, timestamp, received }) => (
-          <p className={received ? "send" : "receive"}>
+          <p className={name === user.displayName ? "send" : "receive"}>
             <span className="name">{name} </span>
             {message}
             <span className="timestamp">{new Date().toUTCString()}</span>

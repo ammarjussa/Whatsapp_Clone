@@ -6,21 +6,6 @@ import Sidebar from "../../components/Sidebar";
 import Pusher from "pusher-js";
 import axios from "../../axios";
 
-/* Things to implement:
-
-1) Firebase authentication.
-1.5) Automatic down scroll, when new message arrives.
-2) One on one messaging. (Complicated)
-3) Group messaging. (Easier)
-4) Login page UI.
-5) Audio message
-6) Attachments sending along with message
-7) All Members shown when chat icon clicked(UI + Functionality)
-8) Logout option 
-9) Deploy on Heroku
-
-*/
-
 function Homepage({ history }) {
   const [user, setUser] = useState({});
 
