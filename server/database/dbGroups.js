@@ -1,10 +1,15 @@
 import mongoose from "mongoose";
-import { whatsappSchema } from "./dbMessages.js";
 
 const groupSchema = mongoose.Schema({
   name: String,
   members: [String],
-  messages: [whatsappSchema],
+  messages: [
+    {
+      name: String,
+      message: String,
+      timestamp: String,
+    },
+  ],
 });
 
 export default mongoose.model("groups", groupSchema);

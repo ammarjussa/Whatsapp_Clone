@@ -17,9 +17,9 @@ export default (app) => {
     });
   });
 
-  app.post("/group/addgroup", (req, res) => {
+  app.post("/groups/addgroup", (req, res) => {
     const newGroup = req.body;
-    Messages.create(dbMsg, (err, data) => {
+    Groups.create(newGroup, (err, data) => {
       err ? res.status(500).send(err) : res.status(201).send(data);
     });
   });
@@ -30,8 +30,39 @@ export default (app) => {
     });
   });
 
-  // app.post("/group/updatemessage", (req, res) => {
-  //   const prevGroup = req.body;
-  //   Groups.updateOne({ _id: updatedGroup._id }, );
-  // });
+  app.post("/groups/updatemembers", (req, res) => {
+    Groups.updateOne(
+      { _id: req.body._id },
+      { $push: { members: req.body.member } },
+      (err, data) => {
+        err ? res.status(500).send(err) : res.status(201).send(data);
+      }
+    );
+  });
+
+  app.post("/groups/updatemessages", (req, res) => {
+    console.log(req.body);
+
+    Groups.updateOne(
+      { _id: req.body._id },
+      {
+        $push: {
+          messages: {
+            name: req.body.message.name,
+            message: req.body.message.message,
+            timestamp: req.body.message.timestamp,
+          },
+        },
+      },
+      (err, data) => {
+        err ? res.status(500).send(err) : res.status(201).send(data);
+      }
+    );
+  });
+
+  app.get("/groups/singlegroup", (req, res) => {
+    Groups.findOne({ _id: req.body._id }, (err, data) => {
+      err ? res.status(500).send(err) : res.status(200).send(data);
+    });
+  });
 };
