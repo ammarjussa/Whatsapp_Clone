@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, memo } from "react";
 import "./index.scss";
 import { Avatar, IconButton, Menu, MenuItem } from "@material-ui/core";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -8,7 +8,7 @@ import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import SidebarChat from "./SidebarChat";
 import firebase from "firebase";
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ user, groups, setGroup }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -17,7 +17,6 @@ const Sidebar = ({ user }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-    console.log(anchorEl);
   };
 
   const signOut = (e) => {
@@ -34,6 +33,22 @@ const Sidebar = ({ user }) => {
         }
       );
   };
+
+  const GroupDisplay = memo(() => (
+    <>
+      {groups.map((group) => {
+        return (
+          <SidebarChat
+            key={group._id}
+            id={group._id}
+            name={group.name}
+            lastMsg={group.messages[group.messages.length - 1]}
+            setGroup={setGroup}
+          />
+        );
+      })}
+    </>
+  ));
 
   return (
     <div className="sidebar">
@@ -74,9 +89,7 @@ const Sidebar = ({ user }) => {
       </div>
 
       <div className="sidebar__chats">
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
+        <GroupDisplay />
       </div>
     </div>
   );

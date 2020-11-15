@@ -30,7 +30,7 @@ export default (app) => {
     });
   });
 
-  app.post("/groups/updatemembers", (req, res) => {
+  app.post("/groups/addmember", (req, res) => {
     Groups.updateOne(
       { _id: req.body._id },
       { $push: { members: req.body.member } },
@@ -40,7 +40,7 @@ export default (app) => {
     );
   });
 
-  app.post("/groups/updatemessages", (req, res) => {
+  app.post("/groups/addmessage", (req, res) => {
     console.log(req.body);
 
     Groups.updateOne(

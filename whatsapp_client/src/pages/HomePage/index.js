@@ -12,14 +12,11 @@ function Homepage({ history }) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (person) {
       if (person) {
-        console.log(person);
         setUser(person);
       } else {
         history.push("/login");
       }
     });
-
-    console.log(user);
   });
   const [messages, setMessages] = useState([]);
 
@@ -45,11 +42,38 @@ function Homepage({ history }) {
     };
   }, [messages]);
 
+  const [groups, setGroups] = useState([]);
+  const [selectedGroup, setSelectedGroup] = useState({});
+
+  useEffect(() => {
+    axios.get("/groups/all").then((res) => {
+      const allgroups = res.data;
+      const mygroups = allgroups.filter((group) =>
+        group.members.includes(user.uid)
+      );
+      setGroups(mygroups);
+    });
+  }, [user.uid]);
+
+  useEffect(() => {
+    setSelectedGroup(groups[0]);
+  }, [groups]);
+
   return (
     <div className="home">
       <div className="home__body">
-        <Sidebar user={user} />
-        <Chat messages={messages} user={user} />
+        <Sidebar
+          groups={groups}
+          user={user}
+          setGroup={(id) =>
+            setSelectedGroup(groups.filter((group) => group._id === id)[0])
+          }
+        />
+        <Chat
+          id={selectedGroup ? selectedGroup._id : ""}
+          messages={selectedGroup ? selectedGroup.messages : ""}
+          user={user}
+        />
       </div>
     </div>
   );

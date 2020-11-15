@@ -8,7 +8,7 @@ import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import axios from "../../axios";
 
-const Chat = ({ messages, user }) => {
+const Chat = ({ id, messages, user }) => {
   const [text, setText] = useState("");
 
   const handleChange = (e) => {
@@ -18,10 +18,13 @@ const Chat = ({ messages, user }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    await axios.post("/messages/new", {
-      message: text,
-      name: user.displayName,
-      timestamp: "Just now!",
+    await axios.post("/groups/addmessage", {
+      _id: id,
+      message: {
+        message: text,
+        name: user.displayName,
+        timestamp: "Just now!",
+      },
     });
 
     setText("");
@@ -38,7 +41,7 @@ const Chat = ({ messages, user }) => {
         behavior: "smooth",
       });
     }
-  }, [scrollRef, messages]);
+  }, [scrollRef, messages, id]);
 
   return (
     <div className="chat">
@@ -63,13 +66,18 @@ const Chat = ({ messages, user }) => {
       </div>
 
       <div className="chat__body" ref={scrollRef}>
-        {messages.map(({ name, message, timestamp, received }) => (
-          <p className={name === user.displayName ? "send" : "receive"}>
-            <span className="name">{name} </span>
-            {message}
-            <span className="timestamp">{new Date().toUTCString()}</span>
-          </p>
-        ))}
+        {messages
+          ? messages.map(({ name, message, timestamp, received }) => (
+              <p
+                key={name + message}
+                className={name === user.displayName ? "send" : "receive"}
+              >
+                <span className="name">{name} </span>
+                {message}
+                <span className="timestamp">{new Date().toUTCString()}</span>
+              </p>
+            ))
+          : null}
       </div>
 
       <div className="chat__footer">
