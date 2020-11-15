@@ -18,29 +18,6 @@ function Homepage({ history }) {
       }
     });
   });
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    axios.get("/messages/sync").then((res) => {
-      setMessages(res.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    const pusher = new Pusher("952f098bb894c5ef807c", {
-      cluster: "ap2",
-    });
-
-    const channel = pusher.subscribe("messages");
-    channel.bind("inserted", (data) => {
-      setMessages([...messages, data]);
-    });
-
-    return () => {
-      channel.unbind_all();
-      channel.unsubscribe();
-    };
-  }, [messages]);
 
   const [groups, setGroups] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState({});
@@ -59,6 +36,31 @@ function Homepage({ history }) {
     setSelectedGroup(groups[0]);
   }, [groups]);
 
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    axios.get("/messages/sync").then((res) => {
+      setMessages(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    const pusher = new Pusher("952f098bb894c5ef807c", {
+      cluster: "ap2",
+    });
+
+    const channel = pusher.subscribe("messages");
+    channel.bind("inserted", (data) => {
+      // setMessages([...messages, data]);
+      alert(data);
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, [messages]);
+
   return (
     <div className="home">
       <div className="home__body">
@@ -71,7 +73,7 @@ function Homepage({ history }) {
         />
         <Chat
           id={selectedGroup ? selectedGroup._id : ""}
-          messages={selectedGroup ? selectedGroup.messages : ""}
+          messages={messages}
           user={user}
         />
       </div>

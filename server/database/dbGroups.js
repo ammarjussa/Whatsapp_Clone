@@ -7,7 +7,6 @@ const groupSchema = mongoose.Schema({
     {
       name: String,
       message: String,
-      timestamp: String,
     },
   ],
 });

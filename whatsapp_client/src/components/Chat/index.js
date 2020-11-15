@@ -23,7 +23,6 @@ const Chat = ({ id, messages, user }) => {
       message: {
         message: text,
         name: user.displayName,
-        timestamp: "Just now!",
       },
     });
 
@@ -67,9 +66,9 @@ const Chat = ({ id, messages, user }) => {
 
       <div className="chat__body" ref={scrollRef}>
         {messages
-          ? messages.map(({ name, message, timestamp, received }) => (
+          ? messages.map(({ _id, name, message, timestamp, received }) => (
               <p
-                key={name + message}
+                key={_id}
                 className={name === user.displayName ? "send" : "receive"}
               >
                 <span className="name">{name} </span>

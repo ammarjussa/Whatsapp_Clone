@@ -50,7 +50,6 @@ export default (app) => {
           messages: {
             name: req.body.message.name,
             message: req.body.message.message,
-            timestamp: req.body.message.timestamp,
           },
         },
       },
