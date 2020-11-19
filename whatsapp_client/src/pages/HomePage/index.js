@@ -36,30 +36,25 @@ function Homepage({ history }) {
     setSelectedGroup(groups[0]);
   }, [groups]);
 
-  const [messages, setMessages] = useState([]);
-
   useEffect(() => {
-    axios.get("/messages/sync").then((res) => {
-      setMessages(res.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    const pusher = new Pusher("952f098bb894c5ef807c", {
+    const pusher = new Pusher("7a0306a85bc21d1a726f", {
       cluster: "ap2",
     });
 
     const channel = pusher.subscribe("messages");
     channel.bind("inserted", (data) => {
-      // setMessages([...messages, data]);
-      alert(data);
+      const updatedGroup = selectedGroup;
+      const length = updatedGroup.messages.length;
+      const newmessage = data.message[`messages.${length}`];
+      updatedGroup.messages.push(newmessage);
+      setSelectedGroup(updatedGroup);
     });
 
     return () => {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, [messages]);
+  }, [selectedGroup, groups]);
 
   return (
     <div className="home">
@@ -73,7 +68,7 @@ function Homepage({ history }) {
         />
         <Chat
           id={selectedGroup ? selectedGroup._id : ""}
-          messages={messages}
+          messages={selectedGroup ? selectedGroup.messages : ""}
           user={user}
         />
       </div>

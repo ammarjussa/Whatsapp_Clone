@@ -9,8 +9,8 @@ const port = process.env.PORT || 9000;
 
 const pusher = new Pusher({
   appId: "1103960",
-  key: "952f098bb894c5ef807c",
-  secret: "e0985424b173e76fc4ee",
+  key: "7a0306a85bc21d1a726f",
+  secret: "1a63345a0faf36136c46",
   cluster: "ap2",
   useTLS: true,
 });
@@ -32,17 +32,14 @@ const db = mongoose.connection;
 db.once("open", () => {
   console.log("DB is connnected");
 
-  const msgCollection = db.collection("messagecontents");
+  const msgCollection = db.collection("groups");
   const changeStream = msgCollection.watch();
 
   changeStream.on("change", (change) => {
-    console.log(change.fullDocument);
-    if (change.operationType === "insert") {
-      const messageDetails = change.fullDocument;
+    if (change.operationType === "update") {
+      const newmessage = change.updateDescription.updatedFields;
       pusher.trigger("messages", "inserted", {
-        name: messageDetails.name,
-        message: messageDetails.message,
-        timestamp: messageDetails.timestamp,
+        message: newmessage,
       });
     }
   });
