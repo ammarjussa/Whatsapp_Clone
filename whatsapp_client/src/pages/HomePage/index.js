@@ -44,10 +44,10 @@ function Homepage({ history }) {
     const channel = pusher.subscribe("messages");
     channel.bind("inserted", (data) => {
       const updatedGroup = selectedGroup;
-      const length = updatedGroup.messages.length;
+      const length = updatedGroup.messages ? updatedGroup.messages.length : 0;
       const newmessage = data.message[`messages.${length}`];
-      updatedGroup.messages.push(newmessage);
-      setSelectedGroup(updatedGroup);
+      updatedGroup.messages = [...updatedGroup.messages, newmessage];
+      setSelectedGroup({ ...updatedGroup });
     });
 
     return () => {
@@ -67,8 +67,8 @@ function Homepage({ history }) {
           }
         />
         <Chat
-          id={selectedGroup ? selectedGroup._id : ""}
-          messages={selectedGroup ? selectedGroup.messages : ""}
+          id={selectedGroup ? selectedGroup._id : null}
+          messages={selectedGroup ? selectedGroup.messages : null}
           user={user}
         />
       </div>

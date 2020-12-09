@@ -65,17 +65,19 @@ const Chat = ({ id, messages, user }) => {
       </div>
 
       <div className="chat__body" ref={scrollRef}>
-        {messages
-          ? messages.map(({ _id, name, message, timestamp, received }) => (
-              <p
-                key={_id}
-                className={name === user.displayName ? "send" : "receive"}
-              >
-                <span className="name">{name} </span>
-                {message}
-                <span className="timestamp">{new Date().toUTCString()}</span>
-              </p>
-            ))
+        {messages || messages?._id
+          ? messages.map(({ _id, name, message }) => {
+              return (
+                <p
+                  key={_id}
+                  className={name === user.displayName ? "send" : "receive"}
+                >
+                  <span className="name">{name} </span>
+                  {message}
+                  <span className="timestamp">{new Date().toUTCString()}</span>
+                </p>
+              );
+            })
           : null}
       </div>
 
