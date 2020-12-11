@@ -4,13 +4,23 @@ import APIRoutes from "./routes/routes.js";
 import Pusher from "pusher";
 import cors from "cors";
 
+require("dotenv").config();
+
 const app = express();
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 8000;
+
+const path = require("path");
+
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 const pusher = new Pusher({
   appId: "1103960",
-  key: "7a0306a85bc21d1a726f",
-  secret: "1a63345a0faf36136c46",
+  key: process.env.pusher_key || "7a0306a85bc21d1a726f",
+  secret: process.env.pusher_secret || "1a63345a0faf36136c46",
   cluster: "ap2",
   useTLS: true,
 });
