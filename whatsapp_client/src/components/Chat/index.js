@@ -65,7 +65,7 @@ const Chat = ({ id, messages, user }) => {
       </div>
 
       <div className="chat__body" ref={scrollRef}>
-        {messages || messages?._id
+        {messages
           ? messages.map(({ _id, name, message }) => {
               return (
                 <p

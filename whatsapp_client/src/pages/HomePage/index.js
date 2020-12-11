@@ -45,7 +45,11 @@ function Homepage({ history }) {
     channel.bind("inserted", (data) => {
       const updatedGroup = selectedGroup;
       const length = updatedGroup.messages ? updatedGroup.messages.length : 0;
-      const newmessage = data.message[`messages.${length}`];
+      let newmessage;
+      if (length) {
+        newmessage = data.message[`messages.${length}`];
+      } else newmessage = data.message["messages"][0];
+
       updatedGroup.messages = [...updatedGroup.messages, newmessage];
       setSelectedGroup({ ...updatedGroup });
     });
