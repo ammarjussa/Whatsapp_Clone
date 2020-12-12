@@ -16,6 +16,7 @@
   "author": "Ammar Jussa",
   "license": "ISC",
   "dependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
