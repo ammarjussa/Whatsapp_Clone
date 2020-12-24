@@ -8,7 +8,7 @@ const SidebarChat = ({ id, name, lastMsg, setGroup }) => {
       <Avatar />
       <div>
         <h2>{name}</h2>
-        <p>{lastMsg && lastMsg.message ? lastMsg.message : "No text"}</p>
+        <p>{lastMsg && lastMsg.message ? lastMsg.message : <i>No text</i>}</p>
       </div>
     </div>
   );
