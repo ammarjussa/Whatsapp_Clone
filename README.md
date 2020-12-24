@@ -7,6 +7,8 @@ WhatsApp Clone using MERN stack
 
 `yarn && yarn start`
 
+Run on https://localhost:3000
+
 ## Description
 
 - User can login via Google Login functionality
