@@ -13,12 +13,10 @@ Run on https://localhost:3000
 
 - User can login via Google Login functionality
 - User can do a group chat with the rest of the group members in real time.
+- More functionalities are coming soon.
 
-## Functionality to add
+## Issues
 
-- Creation of group by user.
-- One on one chat with other user.
-- Delete previous chat.
-- Leave group.
+- User cannot create group for now. The groups are already created in this project.
 
 
