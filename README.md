@@ -1,3 +1,5 @@
+[![HitCount](http://hits.dwyl.com/ammarjussa/facebook-clone.svg)](http://hits.dwyl.com/ammarjussa/facebook-clone) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ammarjussa/facebook-clone) ![GitHub last commit](https://img.shields.io/github/last-commit/ammarjussa/facebook-clone) ![GitHub language count](https://img.shields.io/github/languages/count/ammarjussa/facebook-clone)
+
 # Whatsapp_Clone
 WhatsApp Clone using MERN stack
 
