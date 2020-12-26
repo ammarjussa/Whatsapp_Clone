@@ -13,9 +13,9 @@ Run on https://localhost:3000
 
 ## Description
 
+- This is a clone of whatsapp where users can chat with another person in real time.
 - User can login via Google Login functionality
 - User can do a group chat with the rest of the group members in real time.
-- More functionalities are coming soon.
 
 ## Issues
 
