@@ -17,7 +17,7 @@ This is a clone of WhatsApp where users can chat with another person in real-tim
 
 ## Issues
 
-- User cannot create group for now. The groups are already created in this project.
+- User cannot create group for now. The groups are already created in this project. This feature will be added later.
 
 ## Tools Used:
 
