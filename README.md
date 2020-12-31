@@ -7,7 +7,8 @@
 
 ## Run Project
 
-`yarn && yarn start`
+`yarn && yarn start` on the main directly.
+Then open second terminal, write `cd client` and run `yarn && yarn start` again.
 
 Run on https://localhost:3000
 
